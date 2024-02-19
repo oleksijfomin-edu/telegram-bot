@@ -11,7 +11,9 @@ const requestHandler = (request, response) => {
 const server = http.createServer(requestHandler);
 
 // Прослуховування на порту 3000
-server.listen(3000, (err) => {
+
+const port = process.env.PORT || 3000;
+server.listen(port, (err) => {
     if (err) {
         return console.log('Щось пішло не так:', err);
     }
