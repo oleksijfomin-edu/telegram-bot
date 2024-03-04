@@ -3,6 +3,8 @@ const { message } = require('telegraf/filters')
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
+// todo: add database integration to enable username storage
+
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
