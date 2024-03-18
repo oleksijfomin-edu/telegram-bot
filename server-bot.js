@@ -1,4 +1,4 @@
-import OpenAI from 'openai';
+const OpenAI = require('openai');
 
 const { Telegraf } = require('telegraf')
 const { message } = require('telegraf/filters')
