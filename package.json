@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "openai": "^4.29.1",
     "telegraf": "^4.16.2"
   }
 }
