@@ -48,11 +48,19 @@ bot.hears(/\/gpt maxTokens (\d+)/, async (ctx) => {
     ctx.reply(chatGPTResponse);
 });
 
+// Обробник команди /start
 bot.start((ctx) => ctx.reply('Welcome'));
+
+// Обробник команди /help
 bot.help((ctx) => ctx.reply('Send me a sticker'));
+
+// Обробник стікерів
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
+
+// Обробник команди "hi"
 bot.hears('hi', (ctx) => ctx.reply('Hey there'));
 
+// Запуск бота
 bot.launch({
     webhook: {
         domain: process.env.WEBHOOK_DOMAIN,
@@ -63,3 +71,8 @@ bot.launch({
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
+/*
+feat(bot): додано можливість встановлення максимальної кількості токенів для відповідей від ChatGPT
+
+ */
