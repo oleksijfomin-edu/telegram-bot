@@ -1,9 +1,9 @@
+const { Telegraf } = require('telegraf');
+const { message } = require('telegraf/filters');
 const OpenAI = require('openai');
+require('dotenv').config(); // новий модуль, який покращить роботу чат-боту
 
-const { Telegraf } = require('telegraf')
-const { message } = require('telegraf/filters')
-
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
@@ -12,9 +12,9 @@ const openai = new OpenAI({
 async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.complete({
-            engine: 'gpt-3.5-turbo',
+            engine: 'text-davinci-003', // Оновлено назву моделі та змінено на текст
             prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            maxTokens: 250 // змінено на 250 з 150
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
@@ -23,7 +23,7 @@ async function getChatGPTResponse(prompt) {
     }
 }
 
-bot.start((ctx) => ctx.reply('Welcome'))
+bot.start((ctx) => ctx.reply('Hello brotherman')) // Зміна відповіді
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
@@ -45,8 +45,8 @@ bot.launch({
         domain: process.env.WEBHOOK_DOMAIN,
         port: process.env.PORT,
     },
-})
+});
 
-// Enable graceful stop
+// Завершити програму
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
