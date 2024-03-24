@@ -1,3 +1,4 @@
+// Conventional Commit: fix - Change maxTokens value
 const OpenAI = require('openai');
 const { Telegraf } = require('telegraf');
 const { message } = require('telegraf/filters');
@@ -13,7 +14,7 @@ async function getChatGPTResponse(prompt) {
         const response = await openai.complete({
             engine: 'gpt-3.5-turbo',
             prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            maxTokens: 200 // Змініть за потребою
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
@@ -50,5 +51,3 @@ bot.launch({
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
-
-// Conventional Commit: feat - Add ChatGPT integration
