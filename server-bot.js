@@ -47,6 +47,14 @@ bot.launch({
     },
 })
 
-// Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+// Обробка сигналу SIGINT
+process.once('SIGINT', () => {
+    bot.stop('SIGINT');
+    console.log('Bot stopped gracefully on SIGINT');
+});
+
+// Обробка сигналу SIGTERM
+process.once('SIGTERM', () => {
+    bot.stop('SIGTERM');
+    console.log('Bot stopped gracefully on SIGTERM');
+});
