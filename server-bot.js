@@ -4,8 +4,9 @@ const { Telegraf } = require('telegraf')
 const { message } = require('telegraf/filters')
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
+// Зміна використання OpenAI API ключа на новий
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.NEW_OPENAI_API_KEY, // оновлений ключ
 });
 
 // Функція для надсилання тексту до ChatGPT і отримання результату
