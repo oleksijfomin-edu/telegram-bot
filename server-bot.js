@@ -8,6 +8,17 @@ const openai = new OpenAI({
 });
 
 const responseCache = {}; // Кеш для збереження результатів запитів до API OpenAI
+const MAX_CACHE_SIZE = 100; // Максимальна кількість записів у кеші
+
+// Функція для додавання результату до кешу з обмеженням розміру кешу
+function addToCache(key, value) {
+    const cacheKeys = Object.keys(responseCache);
+    if (cacheKeys.length >= MAX_CACHE_SIZE) {
+        const oldestKey = cacheKeys[0];
+        delete responseCache[oldestKey];
+    }
+    responseCache[key] = value;
+}
 
 // Функція для надсилання тексту до ChatGPT і отримання результату з вказаною максимальною кількістю токенів
 async function getChatGPTResponse(prompt, maxTokens) {
@@ -26,8 +37,8 @@ async function getChatGPTResponse(prompt, maxTokens) {
         });
         const result = response.data.choices[0].text.trim();
 
-        // Збереження результату у кеші
-        responseCache[cacheKey] = result;
+        // Збереження результату у кеші з обмеженням розміру
+        addToCache(cacheKey, result);
 
         return result;
     } catch (error) {
@@ -71,8 +82,3 @@ bot.launch({
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
-
-/*
-feat(bot): додано можливість встановлення максимальної кількості токенів для відповідей від ChatGPT
-
- */
