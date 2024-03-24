@@ -14,7 +14,7 @@ async function getChatGPTResponse(prompt) {
         const response = await openai.complete({
             engine: 'text-davinci-003', // Оновлено назву моделі та змінено на текст
             prompt: prompt,
-            maxTokens: 150 // змінено на 150 з 100
+            maxTokens: 250 // змінено на 250 з 150
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
