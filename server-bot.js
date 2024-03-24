@@ -9,12 +9,12 @@ const openai = new OpenAI({
 });
 
 // Функція для надсилання тексту до ChatGPT і отримання результату
-async function getChatGPTResponse(prompt) {
+async function getChatGPTResponse(params) {
     try {
         const response = await openai.complete({
             engine: 'gpt-3.5-turbo',
-            prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            prompt: params.prompt,
+            maxTokens: params.maxTokens // Змініть за потребою
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
@@ -22,6 +22,7 @@ async function getChatGPTResponse(prompt) {
         return 'Вибачте, сталася помилка. Будь ласка, спробуйте пізніше.';
     }
 }
+
 
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
