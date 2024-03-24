@@ -14,7 +14,7 @@ async function getChatGPTResponse(prompt) {
         const response = await openai.complete({
             model: 'gpt-3.5-turbo',
             prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            maxTokens: 50 // Змініть за потребою
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
