@@ -14,7 +14,7 @@ async function getChatGPTResponse(prompt) {
         const response = await openai.complete({
             engine: 'gpt-3.5-turbo',
             prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            maxTokens: 150 // змінено на 150 з 100
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
@@ -23,7 +23,7 @@ async function getChatGPTResponse(prompt) {
     }
 }
 
-bot.start((ctx) => ctx.reply('Welcome'))
+bot.start((ctx) => ctx.reply('Hello brotherman')) // Зміна відповіді
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
@@ -47,6 +47,6 @@ bot.launch({
     },
 })
 
-// Enable graceful stop
+// Завершити програму
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
