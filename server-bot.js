@@ -1,9 +1,8 @@
 const OpenAI = require('openai');
+const { Telegraf } = require('telegraf');
+const { message } = require('telegraf/filters');
 
-const { Telegraf } = require('telegraf')
-const { message } = require('telegraf/filters')
-
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
@@ -12,9 +11,9 @@ const openai = new OpenAI({
 async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.complete({
-            engine: 'gpt-3.5-turbo',
+            engine: 'gpt-4',
             prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            maxTokens: 200 // Змініть за потребою
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
@@ -23,30 +22,31 @@ async function getChatGPTResponse(prompt) {
     }
 }
 
-bot.start((ctx) => ctx.reply('Welcome'))
-bot.help((ctx) => ctx.reply('Send me a sticker'))
-bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+// Bot commands
+bot.start((ctx) => ctx.reply('Welcome'));
+bot.help((ctx) => ctx.reply('Send me a sticker'));
+bot.on(message('sticker'), (ctx) => ctx.reply('👍'));
+bot.hears('hi', (ctx) => ctx.reply('Hey there'));
 
-
-// Обробник вхідних повідомлень бота
+// Handle bot messages
 bot.hears('gpt', async (ctx) => {
     const userMessage = ctx.message.text;
 
-    // Отримуємо відповідь від ChatGPT за допомогою введеного повідомлення користувача
+    // Get response from ChatGPT based on user message
     const chatGPTResponse = await getChatGPTResponse(userMessage);
 
-    // Надсилаємо отриману відповідь користувачеві
+    // Reply with the response from ChatGPT
     ctx.reply(chatGPTResponse);
 });
 
+// Launch bot
 bot.launch({
     webhook: {
         domain: process.env.WEBHOOK_DOMAIN,
         port: process.env.PORT,
     },
-})
+});
 
 // Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
