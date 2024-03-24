@@ -19,7 +19,7 @@ async function getChatGPTResponse(prompt) {
         return response.data.choices[0].text.trim();
     } catch (error) {
         console.error('Помилка отримання відповіді від ChatGPT API:', error);
-        return 'Вибачте, сталася помилка. Будь ласка, спробуйте пізніше.';
+        return 'Вибачте, сталася помилка. Будь ласка, пофіксіть код.';
     }
 }
 
