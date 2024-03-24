@@ -1,9 +1,9 @@
+const { Telegraf } = require('telegraf');
+const { message } = require('telegraf/filters');
 const OpenAI = require('openai');
+require('dotenv').config(); // новий модуль, який покращить роботу чат-боту
 
-const { Telegraf } = require('telegraf')
-const { message } = require('telegraf/filters')
-
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
@@ -45,7 +45,7 @@ bot.launch({
         domain: process.env.WEBHOOK_DOMAIN,
         port: process.env.PORT,
     },
-})
+});
 
 // Завершити програму
 process.once('SIGINT', () => bot.stop('SIGINT'))
