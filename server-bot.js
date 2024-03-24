@@ -1,4 +1,3 @@
-// Conventional Commit: fix - Change maxTokens value
 const OpenAI = require('openai');
 const { Telegraf } = require('telegraf');
 const { message } = require('telegraf/filters');
@@ -12,7 +11,7 @@ const openai = new OpenAI({
 async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.complete({
-            engine: 'gpt-3.5-turbo',
+            engine: 'gpt-4',
             prompt: prompt,
             maxTokens: 200 // Змініть за потребою
         });
