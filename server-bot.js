@@ -28,6 +28,8 @@ bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 
+bot.hears('joke', (ctx) => ctx.reply('Why don’t scientists trust atoms? Because they make up everything!'))
+
 
 // Обробник вхідних повідомлень бота
 bot.hears('gpt', async (ctx) => {
