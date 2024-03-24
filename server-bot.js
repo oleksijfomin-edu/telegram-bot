@@ -1,9 +1,32 @@
 const OpenAI = require('openai');
+const { Telegraf } = require('telegraf');
+const { message } = require('telegraf/filters');
 
-const { Telegraf } = require('telegraf')
-const { message } = require('telegraf/filters')
+// Перевірка чи існує значення змінної BOT_TOKEN в середовищі
+if (!process.env.BOT_TOKEN) {
+    console.error('Не встановлено змінну середовища BOT_TOKEN');
+    process.exit(1);
+}
 
-const bot = new Telegraf(process.env.BOT_TOKEN)
+// Перевірка чи існує значення змінної OPENAI_API_KEY в середовищі
+if (!process.env.OPENAI_API_KEY) {
+    console.error('Не встановлено змінну середовища OPENAI_API_KEY');
+    process.exit(1);
+}
+
+// Перевірка чи існує значення змінної WEBHOOK_DOMAIN в середовищі
+if (!process.env.WEBHOOK_DOMAIN) {
+    console.error('Не встановлено змінну середовища WEBHOOK_DOMAIN');
+    process.exit(1);
+}
+
+// Перевірка чи існує значення змінної PORT в середовищі
+if (!process.env.PORT) {
+    console.error('Не встановлено змінну середовища PORT');
+    process.exit(1);
+}
+
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
@@ -12,7 +35,7 @@ const openai = new OpenAI({
 async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.complete({
-            engine: 'gpt-3.5-turbo',
+            engine: 'text-davinci-002',
             prompt: prompt,
             maxTokens: 100 // Змініть за потребою
         });
@@ -23,11 +46,10 @@ async function getChatGPTResponse(prompt) {
     }
 }
 
-bot.start((ctx) => ctx.reply('Welcome'))
-bot.help((ctx) => ctx.reply('Send me a sticker'))
-bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
-
+bot.start((ctx) => ctx.reply('Hola')); // Змінено текст на 'Hola'
+bot.help((ctx) => ctx.reply('Send me a sticker'));
+bot.on('sticker', (ctx) => ctx.reply('👍')); // Виправлено фільтр для стікерів
+bot.hears('hi', (ctx) => ctx.reply('Hey there'));
 
 // Обробник вхідних повідомлень бота
 bot.hears('gpt', async (ctx) => {
@@ -45,8 +67,8 @@ bot.launch({
         domain: process.env.WEBHOOK_DOMAIN,
         port: process.env.PORT,
     },
-})
+});
 
 // Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
