@@ -3,9 +3,9 @@ const OpenAI = require('openai');
 const { Telegraf } = require('telegraf')
 const { message } = require('telegraf/filters')
 
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+apiKey: process.env.OPENAI_API_KEY
 });
 
 // Функція для надсилання тексту до ChatGPT і отримання результату
