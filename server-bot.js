@@ -12,7 +12,7 @@ const openai = new OpenAI({
 async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.complete({
-            engine: 'gpt-3.5-turbo',
+            engine: 'text-davinci-003', // Оновлено назву моделі та змінено на текст
             prompt: prompt,
             maxTokens: 150 // змінено на 150 з 100
         });
