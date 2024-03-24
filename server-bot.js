@@ -26,7 +26,7 @@ async function getChatGPTResponse(prompt) {
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+bot.hears('hi', (ctx) => ctx.reply('Hello hello'))
 
 bot.hears('tell me a compliment', (ctx) => ctx.reply('You have a beautiful smile!'))
 
