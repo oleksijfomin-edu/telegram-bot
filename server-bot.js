@@ -1,4 +1,5 @@
 const OpenAI = require('openai');
+const axios = require('axios');
 
 const { Telegraf } = require('telegraf')
 const { message } = require('telegraf/filters')
@@ -22,7 +23,36 @@ async function getChatGPTResponse(prompt) {
         return 'Вибачте, сталася помилка. Будь ласка, спробуйте пізніше.';
     }
 }
+//Функція що дає прогноз погоди в певному місті
+async function getWeather(city) {
+    const apiKey = '9d8b7911add32dd26e062b424804dd79';
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
+    try {
+        const response = await axios.get(url);
+        const data = response.data; // Отримуємо дані з результату запиту
+
+        if (data.cod === 200) {
+            const weatherDescription = data.weather[0].description;
+            const temperature = data.main.temp;
+            return `Погода у місті ${city}: ${weatherDescription}, Температура: ${temperature}°C`;
+        } else {
+            return 'Не вдалося отримати прогноз погоди. Спробуйте ще раз.';
+        }
+    } catch (error) {
+        console.error('Помилка:', error);
+        return 'Сталася помилка при отриманні прогнозу погоди.';
+    }
+}
+bot.command('weather', async (ctx) => {
+    const city = ctx.message.text.split(' ').slice(1).join(' '); // Отримуємо назву міста з тексту команди
+    try {
+        const weatherInfo = await getWeather(city);
+        ctx.reply(weatherInfo);
+    } catch (error) {
+        ctx.reply('Сталася помилка при отриманні прогнозу погоди.');
+    }
+});
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
