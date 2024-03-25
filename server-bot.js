@@ -11,10 +11,9 @@ const openai = new OpenAI({
 // Функція для надсилання тексту до ChatGPT і отримання результату
 async function getChatGPTResponse(prompt) {
     try {
-        const response = await openai.complete({
-            engine: 'gpt-3.5-turbo',
-            prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+        const response = await openai.chat.completions.create({
+            messages: [{ role: 'user', content: prompt }]
+            model: 'gpt-3.5-turbo'
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
