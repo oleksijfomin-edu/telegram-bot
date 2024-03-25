@@ -25,6 +25,15 @@ async function getChatGPTResponse(prompt) {
     }
 }
 
+// Додано новий параметр для ChatGPT
+const response = await openai.complete({
+    engine: 'gpt-3.5-turbo',
+    prompt: prompt,
+    maxTokens: 100,
+    temperature: 0.5  // Доданий новий параметр
+});
+
+
 // Додано можливість логування помилок в консоль
 console.error('Error occurred:', error);
 
