@@ -37,6 +37,16 @@ bot.command('random', (ctx) => {
     ctx.reply(phrases[randomIndex]);
 });
 
+// Оновлення функціональності для відправлення повідомлення про зміну режиму
+bot.command('change_mode', (ctx) => {
+    ctx.reply('Режим успішно змінено!');
+});
+
+// Видаляємо застарілий обробник повідомлень для команди "/old_command"
+bot.hears('old_command', (ctx) => {
+    ctx.reply('Вибачте, команда old_command була застарілою та видалена. Будь ласка, використовуйте команду new_command замість неї.');
+});
+
 
 // Обробник вхідних повідомлень бота
 bot.hears('gpt', async (ctx) => {
