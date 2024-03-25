@@ -31,7 +31,10 @@ bot.command('send_image', (ctx) => ctx.reply('Send me an image'))
 
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+
+// Зміна фільтру для вибору відповідей на повідомлення
+// feat(bot): змінено фільтр для відповідей на повідомлення
+bot.hears(/hello/i, (ctx) => ctx.reply('Hi there!'))
 
 
 
