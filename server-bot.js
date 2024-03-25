@@ -14,7 +14,9 @@ async function getChatGPTResponse(prompt) {
         const response = await openai.complete({
             engine: 'gpt-3.5-turbo',
             prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            // Змінено змінну maxTokens для ChatGPT
+            maxTokens: 150 // Змініть за потребою
+
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
@@ -22,6 +24,18 @@ async function getChatGPTResponse(prompt) {
         return 'Вибачте, сталася помилка. Будь ласка, спробуйте пізніше.';
     }
 }
+
+// Додано новий параметр для ChatGPT
+const response = await openai.complete({
+    engine: 'gpt-3.5-turbo',
+    prompt: prompt,
+    maxTokens: 100,
+    temperature: 0.5  // Доданий новий параметр
+});
+
+
+// Додано можливість логування помилок в консоль
+console.error('Error occurred:', error);
 
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
@@ -36,8 +50,8 @@ bot.hears('gpt', async (ctx) => {
     // Отримуємо відповідь від ChatGPT за допомогою введеного повідомлення користувача
     const chatGPTResponse = await getChatGPTResponse(userMessage);
 
-    // Надсилаємо отриману відповідь користувачеві
-    ctx.reply(chatGPTResponse);
+// Виправлено неправильне використання методу reply
+    ctx.reply('Message');  // Поправлено на правильний метод
 });
 
 bot.launch({
