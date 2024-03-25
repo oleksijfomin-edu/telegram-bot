@@ -24,9 +24,15 @@ async function getChatGPTResponse(prompt) {
 }
 
 bot.start((ctx) => ctx.reply('Welcome'))
+
+// Додавання можливості надсилання зображень
+// feat: додано обробник команди '/send_image'
+bot.command('send_image', (ctx) => ctx.reply('Send me an image'))
+
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+
 
 
 // Обробник вхідних повідомлень бота
@@ -48,16 +54,7 @@ bot.launch({
 })
 
 
-// Додано новий обробник команди '/gpt'
-bot.command('gpt', async (ctx) => {
-    const userMessage = ctx.message.text;
 
-    // Отримуємо відповідь від ChatGPT за допомогою введеного повідомлення користувача
-    const chatGPTResponse = await getChatGPTResponse(userMessage);
-
-    // Надсилаємо отриману відповідь користувачеві
-    ctx.reply(chatGPTResponse);
-});
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
