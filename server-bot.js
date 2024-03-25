@@ -8,24 +8,26 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Функція для надсилання тексту до ChatGPT і отримання результату
+// feat(bot): Added limit for maxTokens parameter (BREAKING CHANGE: Reduced maxTokens limit)
 async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.complete({
             engine: 'gpt-3.5-turbo',
             prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            maxTokens: 30 // Змінено значення за потребою та встановлено нове значення
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
-        console.error('Помилка отримання відповіді від ChatGPT API:', error);
+        console.error('Error occurred while fetching response from ChatGPT API:', error);
         return 'Вибачте, сталася помилка. Будь ласка, спробуйте пізніше.';
     }
 }
 
+
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
-bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
+// feat(bot): Added sticker response
+bot.on(message('sticker'), (ctx) => ctx.reply('👍')); // Додано відповідь на стікери
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 
 
@@ -40,12 +42,13 @@ bot.hears('gpt', async (ctx) => {
     ctx.reply(chatGPTResponse);
 });
 
+// fix: Fixed webhook configuration
 bot.launch({
     webhook: {
-        domain: process.env.WEBHOOK_DOMAIN,
-        port: process.env.PORT,
+        domain: process.env.WEBHOOK_DOMAIN || 'localhost', // Змінено значення за замовчуванням
+        port: process.env.PORT || 3000, // Змінено значення за замовчуванням
     },
-})
+});
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
