@@ -124,7 +124,7 @@ bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
-
+bot.hears('Привіт', (ctx) => ctx.reply('Привіт, друже!'))
 
 // Обробник вхідних повідомлень бота
 bot.hears('gpt', async (ctx) => {
