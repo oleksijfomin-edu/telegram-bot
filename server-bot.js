@@ -39,6 +39,10 @@ bot.hears('gpt', async (ctx) => {
     ctx.reply(chatGPTResponse);
 });
 
+bot.hears(['help'], (ctx) => {
+    ctx.reply('It is a bot that answers your messages and provides assistance. To get a response from ChatGPT, just write "gpt" along with your request.');
+});
+
 bot.launch({
     webhook: {
         domain: process.env.WEBHOOK_DOMAIN,
