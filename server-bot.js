@@ -26,7 +26,16 @@ async function getChatGPTResponse(prompt) {
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👌'))//Зміна смайлика
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+bot.hears('hi', (ctx) => ctx.reply('Hey there!'))
+// Додамо можливість відповіді на повідомлення "bye"
+bot.hears('bye', (ctx) => ctx.reply('Goodbye!'))
+
+// Додамо нову функціональність: відправку випадкової фрази при отриманні команди "/random"
+bot.command('random', (ctx) => {
+    const phrases = ['Hello!', 'How are you?', 'Have a nice day!'];
+    const randomIndex = Math.floor(Math.random() * phrases.length);
+    ctx.reply(phrases[randomIndex]);
+});
 
 
 // Обробник вхідних повідомлень бота
