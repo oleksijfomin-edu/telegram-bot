@@ -13,7 +13,7 @@ const openai = new OpenAI({
 async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.complete({
-            engine: 'gpt-3.5-turbo',
+            engine: 'text-davinci-002',
             prompt: prompt,
             maxTokens: 100 // Змініть за потребою
         });
@@ -123,8 +123,9 @@ bot.command('weather', async (ctx) => {
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+bot.hears('hi', (ctx) => ctx.reply('Hello hello'))
 
+bot.hears('tell me a compliment', (ctx) => ctx.reply('You have a beautiful smile!'))
 
 // Обробник вхідних повідомлень бота
 bot.hears('gpt', async (ctx) => {
