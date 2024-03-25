@@ -8,17 +8,17 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-// feat: Added logging for ChatGPT API errors
+// feat(bot): Added limit for maxTokens parameter (BREAKING CHANGE: Reduced maxTokens limit)
 async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.complete({
             engine: 'gpt-3.5-turbo',
             prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            maxTokens: 30 // Змінено значення за потребою та встановлено нове значення
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
-        console.error('Error occurred while fetching response from ChatGPT API:', error); // Додано логування помилок
+        console.error('Error occurred while fetching response from ChatGPT API:', error);
         return 'Вибачте, сталася помилка. Будь ласка, спробуйте пізніше.';
     }
 }
