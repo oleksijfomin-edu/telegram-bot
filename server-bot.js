@@ -27,7 +27,7 @@ async function getChatGPTResponse(prompt) {
 //==================================================================================================
 //Функція що дає прогноз погоди в певному місті
 async function getWeather(city) {
-    const apiKey = '9d8b7911add32dd26e062b424804dd79';
+    const apiKey = process.env.WEATHER_API_KEY;
     const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
     try {
