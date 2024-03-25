@@ -42,12 +42,13 @@ bot.hears('gpt', async (ctx) => {
     ctx.reply(chatGPTResponse);
 });
 
+// fix: Fixed webhook configuration
 bot.launch({
     webhook: {
-        domain: process.env.WEBHOOK_DOMAIN,
-        port: process.env.PORT,
+        domain: process.env.WEBHOOK_DOMAIN || 'localhost', // Змінено значення за замовчуванням
+        port: process.env.PORT || 3000, // Змінено значення за замовчуванням
     },
-})
+});
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
