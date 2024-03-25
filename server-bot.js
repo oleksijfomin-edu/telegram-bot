@@ -8,7 +8,7 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Функція для надсилання тексту до ChatGPT і отримання результату
+// feat: Added logging for ChatGPT API errors
 async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.complete({
@@ -18,10 +18,11 @@ async function getChatGPTResponse(prompt) {
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
-        console.error('Помилка отримання відповіді від ChatGPT API:', error);
+        console.error('Error occurred while fetching response from ChatGPT API:', error); // Додано логування помилок
         return 'Вибачте, сталася помилка. Будь ласка, спробуйте пізніше.';
     }
 }
+
 
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
