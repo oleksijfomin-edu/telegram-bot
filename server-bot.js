@@ -23,6 +23,9 @@ async function getChatGPTResponse(prompt) {
     }
 }
 
+// Додано можливість логування помилок в консоль
+console.error('Error occurred:', error);
+
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
