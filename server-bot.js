@@ -24,9 +24,21 @@ async function getChatGPTResponse(prompt) {
 }
 
 bot.start((ctx) => ctx.reply('Welcome'))
+
+// Додавання можливості надсилання зображень
+// feat: додано обробник команди '/send_image'
+bot.command('send_image', (ctx) => ctx.reply('Send me an image'))
+
 bot.help((ctx) => ctx.reply('Send me a sticker'))
-bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+
+// Виправлення помилки відображення стікерів
+// fix: виправлено відображення стікерів
+bot.on('sticker', (ctx) => ctx.reply('👍 Sticker received'))
+
+// Зміна фільтру для вибору відповідей на повідомлення
+// feat(bot): змінено фільтр для відповідей на повідомлення
+bot.hears(/hello/i, (ctx) => ctx.reply('Hi there!'))
+
 
 
 // Обробник вхідних повідомлень бота
@@ -40,12 +52,17 @@ bot.hears('gpt', async (ctx) => {
     ctx.reply(chatGPTResponse);
 });
 
+// Зміна логіки запуску бота для використання веб-хуків
+// feat: BREAKING CHANGE - Змінено спосіб запуску бота, тепер він використовує веб-хуки замість попереднього методу. Ця зміна може вплинути на налаштування веб-сервера та потребує оновлення конфігурації.
 bot.launch({
     webhook: {
         domain: process.env.WEBHOOK_DOMAIN,
         port: process.env.PORT,
     },
 })
+
+
+
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
