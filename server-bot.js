@@ -124,7 +124,10 @@ bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
-
+bot.hears(['help', 'допомога'], (ctx) => {
+    const helpMessage = 'Це бот, який відповідає на ваші повідомлення та надає допомогу. Щоб отримати відповідь від ChatGPT, просто напишіть "gpt" разом із вашим запитом.';
+    ctx.reply(helpMessage);
+});
 
 // Обробник вхідних повідомлень бота
 bot.hears('gpt', async (ctx) => {
