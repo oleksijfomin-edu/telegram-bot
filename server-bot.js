@@ -10,7 +10,7 @@ const openai = new OpenAI({
 });
 
 // Функція для надсилання тексту до ChatGPT і отримання результату
-async function getChatGPTResponse(prompt) {
+async function getChatGPTaResponse(prompt) {
     try {
         const response = await openai.complete({
             engine: 'gpt-3.5-turbo',
@@ -130,11 +130,19 @@ bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 bot.hears('gpt', async (ctx) => {
     const userMessage = ctx.message.text;
 
+    if (message.length < 5) {
+        return ctx.reply("Запит надто короткий")
+    }
+
     // Отримуємо відповідь від ChatGPT за допомогою введеного повідомлення користувача
-    const chatGPTResponse = await getChatGPTResponse(userMessage);
+    const chatGPTResponse = await getChatGPTaResponse(userMessage);
 
     // Надсилаємо отриману відповідь користувачеві
     ctx.reply(chatGPTResponse);
+});
+
+bot.hears('hello', async (ctx) => {
+    ctx.reply('hello bro');
 });
 
 bot.launch({
