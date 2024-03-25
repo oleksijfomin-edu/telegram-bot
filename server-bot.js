@@ -13,7 +13,7 @@ async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.chat.completions.create({
             messages: [{ role: 'user', content: prompt }]
-            model: 'gpt-3.5-turbo'
+            model: 'gpt-4'
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
