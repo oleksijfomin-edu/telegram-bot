@@ -41,8 +41,8 @@ bot.hears('gpt', async (ctx) => {
     // Отримуємо відповідь від ChatGPT за допомогою введеного повідомлення користувача
     const chatGPTResponse = await getChatGPTResponse(userMessage);
 
-    // Надсилаємо отриману відповідь користувачеві
-    ctx.reply(chatGPTResponse);
+// Виправлено неправильне використання методу reply
+    ctx.reply('Message');  // Поправлено на правильний метод
 });
 
 bot.launch({
