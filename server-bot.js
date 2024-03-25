@@ -33,6 +33,10 @@ bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 bot.hears('gpt', async (ctx) => {
     const userMessage = ctx.message.text;
 
+    if (message.length < 5) {
+        return ctx.reply("Запит надто короткий")
+    }
+
     // Отримуємо відповідь від ChatGPT за допомогою введеного повідомлення користувача
     const chatGPTResponse = await getChatGPTaResponse(userMessage);
 
