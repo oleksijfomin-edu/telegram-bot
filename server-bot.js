@@ -26,7 +26,8 @@ async function getChatGPTResponse(prompt) {
 
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
-bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
+// feat(bot): Added sticker response
+bot.on(message('sticker'), (ctx) => ctx.reply('👍')); // Додано відповідь на стікери
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 
 
