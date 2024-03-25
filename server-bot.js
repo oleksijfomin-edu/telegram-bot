@@ -47,6 +47,18 @@ bot.launch({
     },
 })
 
+
+// Додано новий обробник команди '/gpt'
+bot.command('gpt', async (ctx) => {
+    const userMessage = ctx.message.text;
+
+    // Отримуємо відповідь від ChatGPT за допомогою введеного повідомлення користувача
+    const chatGPTResponse = await getChatGPTResponse(userMessage);
+
+    // Надсилаємо отриману відповідь користувачеві
+    ctx.reply(chatGPTResponse);
+});
+
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
