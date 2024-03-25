@@ -40,6 +40,10 @@ bot.hears('gpt', async (ctx) => {
     ctx.reply(chatGPTResponse);
 });
 
+bot.hears('hello', async (ctx) => {
+    ctx.reply('hello bro');
+});
+
 bot.launch({
     webhook: {
         domain: process.env.WEBHOOK_DOMAIN,
