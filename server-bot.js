@@ -13,9 +13,9 @@ const openai = new OpenAI({
 async function getChatGPTResponse(prompt) {
     try {
         const response = await openai.complete({
-            engine: 'gpt-3.5-turbo',
+            model: 'gpt-3.5-turbo',
             prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            maxTokens: 50 // Змініть за потребою
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
@@ -123,7 +123,9 @@ bot.command('weather', async (ctx) => {
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+bot.hears('hi', (ctx) => ctx.reply('Hello Human Organism'))
+
+bot.hears('joke', (ctx) => ctx.reply('Why don’t scientists trust atoms? Because they make up everything!'))
 
 
 // Обробник вхідних повідомлень бота
