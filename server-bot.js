@@ -120,7 +120,7 @@ bot.command('weather', async (ctx) => {
 });
 //====================================================================================================
 
-bot.start((ctx) => ctx.reply('Welcome'))
+bot.start((ctx) => ctx.reply('ПРИВІТ ДРУЖЕ ФОМІН')) // ДОДАНО ПРИКОЛ
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
