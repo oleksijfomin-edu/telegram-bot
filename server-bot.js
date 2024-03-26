@@ -1,5 +1,7 @@
 const OpenAI = require('openai');
 const axios = require('axios');
+const mongoose = require('mongoose'); //КРУТА БІБЛІОТЕКА ДЛЯ ЗБЕРІГАННЯ ДАНИХ В ПРОЕКТІ
+
 
 const { Telegraf } = require('telegraf')
 const { message } = require('telegraf/filters')
