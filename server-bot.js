@@ -1,5 +1,7 @@
 const OpenAI = require('openai');
 const axios = require('axios');
+const mongoose = require('mongoose'); //КРУТА БІБЛІОТЕКА ДЛЯ ЗБЕРІГАННЯ ДАНИХ В ПРОЕКТІ
+
 
 const { Telegraf } = require('telegraf')
 const { message } = require('telegraf/filters')
@@ -15,7 +17,7 @@ async function getChatGPTResponse(prompt) {
         const response = await openai.complete({
             engine: 'gpt-3.5-turbo',
             prompt: prompt,
-            maxTokens: 100 // Змініть за потребою
+            maxTokens: 1000000 //ЗМІНЕНО З ПОТРЕБОЮ
         });
         return response.data.choices[0].text.trim();
     } catch (error) {
@@ -55,7 +57,7 @@ const WEATHER_DICTIONARY = {
     "210": "Легка гроза",
     "211": "Гроза",
     "212": "Сильна гроза",
-    "221": "Розріджена гроза",
+    "221": "Ріденька ГРОЗА",  //ВИПРАВЛЕННЯ НАЗВИ
     "230": "Гроза з легкою мрякою",
     "231": "Гроза з мрякою",
     "232": "Гроза з сильною мрякою",
@@ -120,7 +122,7 @@ bot.command('weather', async (ctx) => {
 });
 //====================================================================================================
 
-bot.start((ctx) => ctx.reply('Welcome'))
+bot.start((ctx) => ctx.reply('ПРИВІТ ДРУЖЕ ФОМІН')) // ДОДАНО ПРИКОЛ
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
