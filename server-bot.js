@@ -73,6 +73,34 @@ bot.action('show_air_alarms', async (ctx) => {
     }
 });
 
+// Функція для відправки стікера з ракетою
+async function sendRocketSticker(ctx) {
+    try {
+        // Відправка стікера з ракетою
+        await ctx.replyWithSticker('sticker_id');
+    } catch (error) {
+        console.error('Помилка відправлення стікера:', error);
+        ctx.reply('Виникла помилка під час відправлення стікера. Будь ласка, спробуйте ще раз пізніше.');
+    }
+}
+
+// Обробник кнопки для показу повітряних тривог
+bot.action('show_air_alarms', async (ctx) => {
+    try {
+        const isAirAlarmInUkraine = await checkAirAlarmsInUkraine();
+        if (isAirAlarmInUkraine) {
+            // Якщо є повітряна тривога по всій Україні, відправляємо стікер з ракетою
+            await sendRocketSticker(ctx);
+        } else {
+            // Якщо повітряних тривог немає, відправляємо інформаційне повідомлення
+            ctx.reply('Повітряних тривог наразі немає :).');
+        }
+    } catch (error) {
+        console.error('Помилка в обробнику кнопки show_air_alarms:', error);
+        ctx.reply('Виникла помилка. Будь ласка, спробуйте пізніше.');
+    }
+});
+
 // Обробник вхідних повідомлень бота
 bot.hears('gpt', async (ctx) => {
     const userMessage = ctx.message.text;
