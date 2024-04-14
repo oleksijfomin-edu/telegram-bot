@@ -49,6 +49,30 @@ bot.command('air_alarm', (ctx) => {
     ]));
 });
 
+const axios = require('axios');
+
+bot.action('show_air_alarms', async (ctx) => {
+    try {
+        // Отримання даних про повітряні тривоги з API
+        const response = await axios.get('URL_для_отримання_даних_про_повітряні_тривоги');
+
+        // Парсинг отриманих даних
+        const airAlarmsData = response.data;
+
+        // Підготовка повідомлення для відображення
+        let message = 'Інформація про повітряні тривоги:\n';
+        airAlarmsData.forEach((alarm) => {
+            message += `Тривога: ${alarm.type}, Тривалість: ${alarm.duration}, Час: ${alarm.time}\n`;
+        });
+
+        // Відправлення повідомлення з інформацією про повітряні тривоги
+        ctx.reply(message);
+    } catch (error) {
+        console.error('Помилка отримання даних про повітряні тривоги в Україні:', error);
+        ctx.reply('Виникла помилка при отриманні даних про повітряні тривоги. Будь ласка, спробуйте ще раз пізніше.');
+    }
+});
+
 // Обробник вхідних повідомлень бота
 bot.hears('gpt', async (ctx) => {
     const userMessage = ctx.message.text;
