@@ -127,7 +127,7 @@ bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 
 
 // Обробник вхідних повідомлень бота
-bot.hears('gpt', async (ctx) => {
+bot.command('gpt', async (ctx) => {
     const userMessage = ctx.message.text;
 
     // Отримуємо відповідь від ChatGPT за допомогою введеного повідомлення користувача
