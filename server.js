@@ -3,6 +3,7 @@ const http = require('http');
 // Функція-обробник запитів
 const requestHandler = (request, response) => {
     console.log('Запит отримано.');
+    console.log(response.someNonExistentProperty);
     response.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'}); // Встановлюємо правильне кодування
     response.end('Привіт з веб-сервера Node.js!');
 };
