@@ -2,10 +2,10 @@
 const axios = require('axios');
 
 async function getWeather(city) {
-    const apiKey = '9d8b7911add32dd26e062b424804dd79';
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
     try {
+        const apiKey = '9d8b7911add32dd26e062b424804dd79';
+        const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
         const response = await axios.get(url);
         const data = response.data; // Отримуємо дані з результату запиту
 
