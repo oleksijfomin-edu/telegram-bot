@@ -17,12 +17,13 @@ async function getChatGPTResponse(prompt) {
             prompt: prompt,
             maxTokens: 100 // Змініть за потребою
         });
-        return response.data.choices[0].text.trim();
+        return chatCompletion.choices[0].message.content;
     } catch (error) {
         console.error('Помилка отримання відповіді від ChatGPT API:', error);
         return 'Вибачте, сталася помилка. Будь ласка, спробуйте пізніше.';
     }
 }
+
 
 //==================================================================================================
 //Функція що дає прогноз погоди в певному місті
@@ -120,6 +121,52 @@ bot.command('weather', async (ctx) => {
 });
 //====================================================================================================
 
+//====================================================================================================
+bot.command('royalestats', async (ctx) => {
+    // Отримуємо хештег гравця з тексту команди
+    const playerTag = ctx.message.text.split(' ').slice(1).join(' ');
+    
+    if (!playerTag) {
+        return ctx.reply('Будь ласка, вкажіть хештег гравця після команди /royalestats');
+    }
+
+    // remove # char
+    if (playerTag.startsWith('#')){
+        playerTag = playerTag.replace('#', '')
+    }
+    
+    try {
+        // Запитуємо дані гравця за допомогою Clash Royale API
+        const response = await axios.get(`https://api.clashroyale.com/v1/players/%23${playerTag}`, {
+            headers: {
+                'Authorization': `Bearer ${process.env.CLASH_ROYALE_API_TOKEN}`,
+            }
+        });
+    
+        const playerData = response.data;
+    
+            // Формуємо відповідь із даними гравця
+        const trophies = playerData.trophies;
+        const playerLevel = playerData.expLevel;
+        const clanName = playerData.clan ? playerData.clan.name : 'Не в кланi';
+        const clanRole = playerData.clan ? playerData.role : '';
+    
+        const message = `
+            Ім'я гравця: ${playerData.name}
+            Кубків: ${trophies}
+            Рівень: ${playerLevel}
+            Клан: ${clanName} (${clanRole})
+        `;
+    
+        // Надсилаємо повідомлення з інформацією про гравця
+        ctx.reply(message);
+    } catch (error) {
+        console.error('Помилка при отриманні даних гравця:', error);
+        ctx.reply('Виникла помилка при отриманні даних гравця. Будь ласка, спробуйте пізніше.');
+    }
+});
+//==================================================================================================== 
+
 bot.start((ctx) => ctx.reply('Welcome'))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
@@ -127,7 +174,7 @@ bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 
 
 // Обробник вхідних повідомлень бота
-bot.hears('gpt', async (ctx) => {
+bot.command('gpt', async (ctx) => {
     const userMessage = ctx.message.text;
 
     // Отримуємо відповідь від ChatGPT за допомогою введеного повідомлення користувача
