@@ -1,0 +1,21 @@
+name: Jest Tests
+
+on:
+  push:
+    branches:
+      - main  # Adjust this branch name according to your main branch
+
+jobs:
+  test:
+    name: Run Jest Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Jest Tests
+        run: npm test
