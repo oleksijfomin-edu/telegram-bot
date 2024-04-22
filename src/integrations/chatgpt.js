@@ -21,7 +21,7 @@ async function getChatGPTResponse(prompt) {
 
 const integrationChatGPT = (bot) => {
     // Обробник вхідних повідомлень бота
-    bot.command('gpt', async (ctx) => {
+    bot.test('gpt', async (ctx) => {
         const userMessage = ctx.message.text;
 
         // Отримуємо відповідь від ChatGPT за допомогою введеного повідомлення користувача
